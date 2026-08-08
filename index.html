@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>حملة الصفر - Special Forces Group 2 PRO</title>
+    <title>حملة صفر - Special Forces Group 2</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Cairo:wght@600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Cairo:wght@700;900&display=swap');
 
         * {
             box-sizing: border-box;
@@ -23,11 +23,52 @@
             color: #fff;
         }
 
+        /* ----- تصميم شعار "حملة صفر" المائل المخصص بالزاوية ----- */
+        .corner-logo {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            z-index: 150;
+            background: #1b5e20;
+            padding: 12px 28px;
+            border-radius: 12px;
+            transform: skew(-15deg);
+            box-shadow: -5px 5px 0px #00e676, 0 8px 20px rgba(0,0,0,0.6);
+            border: 2px solid #00e676;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .corner-logo .text-wrapper {
+            transform: skew(5deg);
+            text-align: center;
+            line-height: 1.0;
+        }
+
+        .corner-logo .word-hamla {
+            color: #29b6f6;
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px #000;
+            letter-spacing: 1px;
+        }
+
+        .corner-logo .word-sefr {
+            color: #ffffff;
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px #000;
+            margin-top: -6px;
+        }
+
         /* ----- الواجهة الرئيسية SFG2 Style ----- */
         #main-menu {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(3, 7, 18, 0.95)), 
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(3, 7, 18, 0.95)), 
                         url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200') center/cover;
             display: flex;
             flex-direction: column;
@@ -36,14 +77,11 @@
             z-index: 100;
         }
 
-        .header-title {
-            text-align: right;
-        }
         .header-title h1 {
             font-family: 'Teko', sans-serif;
-            font-size: 4rem;
+            font-size: 3.8rem;
             letter-spacing: 2px;
-            color: #f87171;
+            color: #ef4444;
             text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 5px #000;
             line-height: 0.9;
         }
@@ -51,13 +89,6 @@
             color: #94a3b8;
             font-size: 1.1rem;
             font-weight: bold;
-        }
-
-        .menu-layout {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            width: 100%;
         }
 
         .menu-buttons {
@@ -93,18 +124,7 @@
             border-left: 4px solid #38bdf8;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-        .sfg-btn-secondary:hover {
-            background: linear-gradient(90deg, #334155 0%, #1e293b 100%);
-        }
 
-        .sfg-btn-disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            filter: grayscale(0.8);
-        }
-        .sfg-btn-disabled:hover { transform: none; }
-
-        /* نافذة الإعدادات واختيار الشخصية */
         .modal {
             display: none;
             position: absolute;
@@ -116,7 +136,7 @@
             border-radius: 8px;
             padding: 25px;
             width: 90%;
-            max-width: 550px;
+            max-width: 650px;
             z-index: 200;
             max-height: 85vh;
             overflow-y: auto;
@@ -129,6 +149,38 @@
             padding-bottom: 10px;
         }
 
+        /* شبكة الخرائط */
+        .map-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .map-card {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .map-card.selected {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .map-icon {
+            font-size: 2rem;
+            background: #0f172a;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
         .setting-row {
             display: flex;
             justify-content: space-between;
@@ -137,51 +189,6 @@
             background: #1e293b;
             padding: 8px 15px;
             border-radius: 6px;
-        }
-
-        .setting-row label { font-size: 0.95rem; }
-
-        .key-input {
-            background: #0f172a;
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-family: monospace;
-            width: 100px;
-            text-align: center;
-        }
-
-        .char-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .char-card {
-            background: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .char-card.selected {
-            border-color: #ef4444;
-            background: rgba(239, 68, 68, 0.15);
-        }
-
-        .char-card img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 10px;
-            border: 2px solid #fff;
         }
 
         /* ----- منطقة اللعبة (Game Arena) ----- */
@@ -209,51 +216,22 @@
         #crosshair::before { top: 5px; left: -8px; width: 28px; height: 2px; }
         #crosshair::after { top: -8px; left: 5px; width: 2px; height: 28px; }
 
-        /* تراكب مفاتيح المحاكي للابتوب */
-        .emulator-overlay {
+        #target-tag {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .key-badge {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.75);
-            border: 1px solid rgba(56, 189, 248, 0.8);
-            color: #38bdf8;
-            padding: 4px 8px;
+            top: 45%; left: 50%;
+            transform: translate(-50%, -100%);
+            font-size: 1.1rem;
+            font-weight: 800;
+            padding: 4px 12px;
             border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.8);
-        }
-
-        /* عناصر التحكم بالجوال */
-        .touch-controls {
             display: none;
-            position: absolute;
-            bottom: 25px; left: 25px; right: 25px;
-            justify-content: space-between;
-            align-items: flex-end;
-            z-index: 20;
-            pointer-events: auto;
+            pointer-events: none;
+            z-index: 15;
+            text-shadow: 0 0 6px #000;
         }
+        .tag-blue { background: rgba(30, 58, 138, 0.85); color: #60a5fa; border: 1px solid #3b82f6; }
+        .tag-red { background: rgba(153, 27, 27, 0.85); color: #fca5a5; border: 1px solid #ef4444; }
 
-        .t-btn {
-            width: 60px; height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            color: white;
-            backdrop-filter: blur(4px);
-        }
-
-        /* شاشة HUD داخل اللعبة */
         .hud {
             position: absolute;
             bottom: 20px;
@@ -266,7 +244,7 @@
         }
 
         .hud-box {
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid #334155;
             padding: 5px 15px;
             border-radius: 6px;
@@ -274,117 +252,133 @@
             align-items: center;
             gap: 8px;
         }
+
+        #mode-banner {
+            position: absolute;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #ef4444;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #f87171;
+            z-index: 10;
+        }
     </style>
-    <!-- مكتبة ثلاثية الأبعاد متقدمة -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-    <!-- الواجهة الرئيسية متطابقة مع SFG2 -->
+    <!-- الشعار المائل بالزاوية العلويّة -->
+    <div class="corner-logo">
+        <div class="text-wrapper">
+            <div class="word-hamla">حملة</div>
+            <div class="word-sefr">صفر</div>
+        </div>
+    </div>
+
     <div id="main-menu">
         <div class="header-title">
             <h1>SPECIAL FORCES GROUP 2</h1>
-            <p>منصة حملة الصفر - النسخة الاحترافية</p>
+            <p>المحاكي الرسمي - إصدار الخرائط والأماكن</p>
         </div>
 
         <div class="menu-layout">
             <div class="menu-buttons">
-                <button class="sfg-btn" onclick="openModal('match-modal')">لعب مع البوتات (BOTS) 🎮</button>
-                <button class="sfg-btn sfg-btn-secondary" onclick="openModal('char-modal')">اختيار الشخصية 👤</button>
+                <button class="sfg-btn" onclick="openModal('match-modal')">بداية المعركة (START GAME) 🎮</button>
+                <button class="sfg-btn sfg-btn-secondary" onclick="openModal('char-modal')">اختيار الفريق والشخصية 👤</button>
                 <button class="sfg-btn sfg-btn-secondary" onclick="openModal('settings-modal')">إعدادات المحاكي ⌨️</button>
-                <button class="sfg-btn sfg-btn-secondary sfg-btn-disabled">المتجر / الأسلحة 🛒 (قريباً)</button>
-                <button class="sfg-btn sfg-btn-secondary sfg-btn-disabled">أونلاين 🌐 (قريباً)</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة إعداد المباراة -->
+    <!-- نافذة اختيار الخريطة والمكان -->
     <div class="modal" id="match-modal">
-        <h2>إعدادات المباراة</h2>
-        <div class="setting-row">
-            <label>عدد البوتات:</label>
-            <input type="number" id="botCount" value="6" min="2" max="16" style="width: 70px; padding: 4px; background: #0f172a; color: white; border: 1px solid #475569; border-radius: 4px;">
+        <h2>اختر مكان المعركة (MAP SELECT)</h2>
+        
+        <div class="map-grid">
+            <div class="map-card selected" id="map-house" onclick="selectMap('house')">
+                <div class="map-icon">🏡</div>
+                <div>
+                    <h3 style="color:#f87171;">HOUSE (البيت)</h3>
+                    <p style="font-size: 0.8rem; color:#94a3b8;">منزل طابقين وغرف ومواجهات قريبة</p>
+                </div>
+            </div>
+
+            <div class="map-card" id="map-desert" onclick="selectMap('desert')">
+                <div class="map-icon">🌵</div>
+                <div>
+                    <h3 style="color:#facc15;">DESERT (الصحراء)</h3>
+                    <p style="font-size: 0.8rem; color:#94a3b8;">منطقة مفتوحة ومساحات قتال كبيرة</p>
+                </div>
+            </div>
+
+            <div class="map-card" id="map-office" onclick="selectMap('office')">
+                <div class="map-icon">🏢</div>
+                <div>
+                    <h3 style="color:#38bdf8;">OFFICE (المكتب)</h3>
+                    <p style="font-size: 0.8rem; color:#94a3b8;">مبنى مكاتب وممرات جدران</p>
+                </div>
+            </div>
+
+            <div class="map-card" id="map-factory" onclick="selectMap('factory')">
+                <div class="map-icon">🏭</div>
+                <div>
+                    <h3 style="color:#a855f7;">FACTORY (المصنع)</h3>
+                    <p style="font-size: 0.8rem; color:#94a3b8;">مستودعات وصناديق شحن</p>
+                </div>
+            </div>
         </div>
+
         <div class="setting-row">
-            <label>مستوى الصعوبة:</label>
-            <select id="botDiff" style="padding: 4px; background: #0f172a; color: white; border: 1px solid #475569; border-radius: 4px;">
-                <option value="easy">سهل (Easy)</option>
-                <option value="medium" selected>متوسط (Medium)</option>
-                <option value="hard">صعب جداً (Hard)</option>
+            <label>نمط اللعب (Mode):</label>
+            <select id="gameModeSelect" style="padding: 6px; background: #0f172a; color: white; border: 1px solid #475569; border-radius: 4px;">
+                <option value="Classic">Classic - كلاسيكي</option>
+                <option value="Resurrection">Resurrection - إعادة البعث</option>
+                <option value="Zombie">Zombie Mode - وضع الزومبي 🧟</option>
             </select>
         </div>
-        <button class="sfg-btn" style="width: 100%; margin-top: 15px;" onclick="startGame()">دخول المعركة 🔥</button>
+
+        <button class="sfg-btn" style="width: 100%; margin-top: 15px;" onclick="startGame()">دخول الخريطة وتأكيد المعركة 🔥</button>
         <button class="sfg-btn sfg-btn-secondary" style="width: 100%; margin-top: 8px;" onclick="closeModals()">إلغاء</button>
     </div>
 
-    <!-- نافذة اختيار الشخصية -->
+    <!-- نافذة الفريق -->
     <div class="modal" id="char-modal">
-        <h2>اختر الفريق والشخصية</h2>
-        <div class="char-cards">
-            <div class="char-card selected" id="card-ct" onclick="selectTeam('ct')">
-                <img src="https://img.freepik.com/free-vector/soldier-mascot-logo-design_142989-138.jpg" alt="CT">
-                <h3>القوات الخاصة</h3>
-                <p style="font-size: 0.8rem; color: #38bdf8;">Special Forces</p>
-            </div>
-            <div class="char-card" id="card-t" onclick="selectTeam('t')">
-                <img src="https://img.freepik.com/free-vector/skull-soldier-mascot-logo_142989-106.jpg" alt="T">
-                <h3>المتمردين</h3>
-                <p style="font-size: 0.8rem; color: #f87171;">Rebels Team</p>
-            </div>
+        <h2>اختر فريقك التكتيكي</h2>
+        <div style="display: flex; gap: 10px;">
+            <button class="sfg-btn" style="flex: 1;" onclick="closeModals()">القوات الخاصة (Blue)</button>
+            <button class="sfg-btn sfg-btn-secondary" style="flex: 1;" onclick="closeModals()">المتمردين (Red)</button>
         </div>
-        <button class="sfg-btn" style="width: 100%;" onclick="closeModals()">تأكيد الاختيار</button>
     </div>
 
-    <!-- نافذة إعدادات المحاكي المتقدمة -->
+    <!-- نافذة الإعدادات -->
     <div class="modal" id="settings-modal">
-        <h2>تخصيص أزرار المحاكي (Keyboard Binds)</h2>
-        <div class="setting-row"><label>الحركة للأمام:</label><span class="key-input">W</span></div>
-        <div class="setting-row"><label>الحركة للخلف:</label><span class="key-input">S</span></div>
-        <div class="setting-row"><label>التحرك يسار/يمين:</label><span class="key-input">A / D</span></div>
-        <div class="setting-row"><label>إطلاق النار:</label><span class="key-input">Mouse 1</span></div>
-        <div class="setting-row"><label>القفز:</label><span class="key-input">Space</span></div>
-        <div class="setting-row"><label>إعادة تعبئة الذخيرة (Reload):</label><span class="key-input">R</span></div>
-        <div class="setting-row"><label>الانحناء (Crouch):</label><span class="key-input">C</span></div>
-        <div class="setting-row"><label>الركض السريع:</label><span class="key-input">Shift</span></div>
-        <button class="sfg-btn" style="width: 100%; margin-top: 15px;" onclick="closeModals()">حفظ الإعدادات</button>
+        <h2>التحكم: WASD للحركة | Mouse1 للإطلاق</h2>
+        <button class="sfg-btn" style="width: 100%;" onclick="closeModals()">حفظ وإغلاق</button>
     </div>
 
-    <!-- شاشة اللعبة 3D -->
+    <!-- ساحة اللعبة -->
     <div id="game-container">
         <div id="crosshair"></div>
+        <div id="target-tag"></div>
+        <div id="mode-banner">MAP: <span id="map-title" style="color:#facc15;">HOUSE</span> | MODE: <span id="mode-title">CLASSIC</span></div>
 
-        <!-- الـ HUD الحقيقي للعبة -->
         <div class="hud">
             <div class="hud-box" style="color: #4ade80;">❤️ <span id="hp-val">100</span></div>
             <div class="hud-box" style="color: #facc15;">💥 <span id="ammo-val">30 / 90</span></div>
-        </div>
-
-        <!-- تراكب محاكي اللابتوب -->
-        <div class="emulator-overlay" id="emulatorUI">
-            <div class="key-badge" style="bottom: 100px; left: 100px;">WASD - الحركة</div>
-            <div class="key-badge" style="bottom: 40px; right: 120px;">SPACE - قفز</div>
-            <div class="key-badge" style="bottom: 80px; right: 60px;">R - إعادة تعبئة</div>
-            <div class="key-badge" style="bottom: 120px; right: 60px;">C - انحناء</div>
-            <div class="key-badge" style="top: 20px; left: 20px;">Mouse 1 - إطلاق النار</div>
-        </div>
-
-        <!-- أزرار اللمس للجوال -->
-        <div class="touch-controls" id="touchUI">
-            <div class="t-btn">🕹️</div>
-            <div style="display: flex; gap: 10px;">
-                <div class="t-btn">⬆️</div>
-                <div class="t-btn" style="background: rgba(239, 68, 68, 0.5);">💥</div>
-            </div>
         </div>
 
         <canvas id="gameCanvas"></canvas>
     </div>
 
     <script>
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        let selectedTeam = 'ct';
-        let scene, camera, renderer;
-        let playerGun, bots = [];
+        let selectedMap = 'house';
+        let currentMode = 'Classic';
+        let scene, camera, renderer, raycaster;
+        let bots = [];
         let keys = {};
 
         function openModal(id) {
@@ -396,73 +390,67 @@
             document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         }
 
-        function selectTeam(team) {
-            selectedTeam = team;
-            document.getElementById('card-ct').classList.toggle('selected', team === 'ct');
-            document.getElementById('card-t').classList.toggle('selected', team === 't');
+        function selectMap(mapName) {
+            selectedMap = mapName;
+            document.querySelectorAll('.map-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('map-' + mapName).classList.add('selected');
         }
 
         function startGame() {
             closeModals();
+            currentMode = document.getElementById('gameModeSelect').value;
+
+            document.getElementById('mode-title').innerText = currentMode.toUpperCase();
+            document.getElementById('map-title').innerText = selectedMap.toUpperCase();
+
             document.getElementById('main-menu').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
 
-            if (isMobile) {
-                document.getElementById('emulatorUI').style.display = 'none';
-                document.getElementById('touchUI').style.display = 'flex';
-            } else {
-                document.getElementById('emulatorUI').style.display = 'block';
-                document.getElementById('touchUI').style.display = 'none';
-                document.body.requestPointerLock();
-            }
-
+            document.body.requestPointerLock();
             init3DGame();
         }
 
-        // محرك الجرافيكس 3D المتطور
         function init3DGame() {
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x1e293b);
-            scene.fog = new THREE.FogExp2(0x1e293b, 0.015);
+            raycaster = new THREE.Raycaster();
+
+            let mapBg = 0x0f172a;
+            let floorColor = 0x334155;
+
+            if (selectedMap === 'desert') { mapBg = 0xd97706; floorColor = 0xb45309; }
+            else if (selectedMap === 'house') { mapBg = 0x1e293b; floorColor = 0x475569; }
+            else if (selectedMap === 'office') { mapBg = 0x0284c7; floorColor = 0x94a3b8; }
+            else if (selectedMap === 'factory') { mapBg = 0x334155; floorColor = 0x1e293b; }
+
+            scene.background = new THREE.Color(mapBg);
+            scene.fog = new THREE.FogExp2(mapBg, 0.01);
 
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.set(0, 1.7, 0);
 
             renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gameCanvas'), antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.shadowMap.enabled = true;
 
-            // الإضاءة التكتيكية
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-            scene.add(ambientLight);
+            const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambient);
 
-            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            dirLight.position.set(20, 40, 20);
-            dirLight.castShadow = true;
-            scene.add(dirLight);
+            const sun = new THREE.DirectionalLight(0xffffff, 0.8);
+            sun.position.set(30, 50, 20);
+            scene.add(sun);
 
-            // أرضية المعركة (Concrete Field)
-            const floorGeo = new THREE.PlaneGeometry(120, 120);
-            const floorMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.8 });
-            const floor = new THREE.Mesh(floorGeo, floorMat);
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(160, 160), new THREE.MeshStandardMaterial({ color: floorColor }));
             floor.rotation.x = -Math.PI / 2;
-            floor.receiveShadow = true;
             scene.add(floor);
 
-            // بناء خريطة معركة ومخابئ
-            createEnvironment();
+            buildMapStructure();
+            createFPSGun();
 
-            // إرفاق السلاح التكتيكي كاملاً بأسلوب FPS View
-            createPlayerGun();
-
-            // إنشاء شخصيات البوتات التكتيكية 3D
-            const botCount = parseInt(document.getElementById('botCount').value);
-            for(let i = 0; i < botCount; i++) {
-                const team = (i % 2 === 0) ? 'ct' : 't';
-                create3DCharacter((Math.random() - 0.5) * 60, (Math.random() - 0.5) * 60, team);
+            bots = [];
+            for (let i = 0; i < 8; i++) {
+                let team = (i % 2 === 0) ? 'ct' : 't';
+                createDetailedBot((Math.random() - 0.5) * 60, (Math.random() - 0.5) * 60, team);
             }
 
-            // أدوات الحركة والأحداث
             window.addEventListener('keydown', e => keys[e.code] = true);
             window.addEventListener('keyup', e => keys[e.code] = false);
 
@@ -475,123 +463,108 @@
             animate();
         }
 
-        function createEnvironment() {
-            // جدران المحيط
-            createBox(0, 3, -60, 120, 6, 2, 0x1e293b);
-            createBox(0, 3, 60, 120, 6, 2, 0x1e293b);
-            createBox(-60, 3, 0, 2, 6, 120, 0x1e293b);
-            createBox(60, 3, 0, 2, 6, 120, 0x1e293b);
-
-            // مخابئ تكتيكية وصناديق داخل الساحة
-            for(let i=0; i<15; i++) {
-                let x = (Math.random() - 0.5) * 80;
-                let z = (Math.random() - 0.5) * 80;
-                createBox(x, 1.5, z, 3, 3, 3, 0x78350f); // صناديق خشبية
+        function buildMapStructure() {
+            if (selectedMap === 'house') {
+                createWall(0, 3, -15, 20, 6, 1, 0x94a3b8);
+                createWall(-10, 3, 0, 1, 6, 30, 0x94a3b8);
+                createWall(10, 3, 0, 1, 6, 30, 0x94a3b8);
+                createWall(0, 6, 0, 20, 1, 30, 0x64748b);
+                createWall(-4, 1, -5, 3, 2, 3, 0x78350f);
+                createWall(4, 1, 5, 4, 2, 2, 0x1e293b);
+            } else {
+                for (let i = 0; i < 18; i++) {
+                    createWall((Math.random() - 0.5) * 80, 1.5, (Math.random() - 0.5) * 80, 4, 3, 4, 0x475569);
+                }
             }
         }
 
-        function createBox(x, y, z, w, h, d, color) {
-            const mesh = new THREE.Mesh(
+        function createWall(x, y, z, w, h, d, color) {
+            const wall = new THREE.Mesh(
                 new THREE.BoxGeometry(w, h, d),
                 new THREE.MeshStandardMaterial({ color: color })
             );
-            mesh.position.set(x, y, z);
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            scene.add(mesh);
+            wall.position.set(x, y, z);
+            scene.add(wall);
         }
 
-        // بناء شخصية 3D حقيقية (رأس، جسم، درع، وأيدي)
-        function create3DCharacter(x, z, team) {
-            const charGroup = new THREE.Group();
-
-            // لون الفريق (CT كحلي / T بني وأحمر)
-            const bodyColor = (team === 'ct') ? 0x1e3a8a : 0x78350f;
-            const vestColor = (team === 'ct') ? 0x0f172a : 0xb91c1c;
-
-            // الجسم / الدرع
-            const body = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.5, 0.4, 1.4, 8),
-                new THREE.MeshStandardMaterial({ color: bodyColor })
-            );
-            body.position.y = 1.1;
-            charGroup.add(body);
-
-            const vest = new THREE.Mesh(
-                new THREE.BoxGeometry(0.9, 0.8, 0.6),
-                new THREE.MeshStandardMaterial({ color: vestColor })
-            );
-            vest.position.y = 1.2;
-            charGroup.add(vest);
-
-            // الرأس والخوذة
-            const head = new THREE.Mesh(
-                new THREE.SphereGeometry(0.35, 12, 12),
-                new THREE.MeshStandardMaterial({ color: 0xfbcfe8 })
-            );
-            head.position.y = 2.0;
-            charGroup.add(head);
-
-            const helmet = new THREE.Mesh(
-                new THREE.SphereGeometry(0.38, 12, 12, 0, Math.PI * 2, 0, Math.PI / 2),
-                new THREE.MeshStandardMaterial({ color: 0x0f172a })
-            );
-            helmet.position.y = 2.05;
-            charGroup.add(helmet);
-
-            // السلاح في يد الشخصية
-            const gun = new THREE.Mesh(
-                new THREE.BoxGeometry(0.15, 0.15, 0.8),
-                new THREE.MeshStandardMaterial({ color: 0x111827 })
-            );
-            gun.position.set(0.4, 1.2, -0.4);
-            charGroup.add(gun);
-
-            charGroup.position.set(x, 0, z);
-            scene.add(charGroup);
-            bots.push(charGroup);
-        }
-
-        // إنشاء سلاح 3D متصل بنظر اللاعب (FPS Gun View)
-        function createPlayerGun() {
-            playerGun = new THREE.Group();
-
-            const body = new THREE.Mesh(
-                new THREE.BoxGeometry(0.1, 0.12, 0.6),
-                new THREE.MeshStandardMaterial({ color: 0x111827 })
-            );
-
-            const barrel = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.02, 0.02, 0.4),
-                new THREE.MeshStandardMaterial({ color: 0x374151 })
-            );
+        function createFPSGun() {
+            const gunGroup = new THREE.Group();
+            const body = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.15, 0.7), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
+            const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.4), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
             barrel.rotation.x = Math.PI / 2;
             barrel.position.set(0, 0.02, -0.4);
 
-            playerGun.add(body);
-            playerGun.add(barrel);
+            gunGroup.add(body);
+            gunGroup.add(barrel);
+            gunGroup.position.set(0.3, -0.25, -0.5);
 
-            playerGun.position.set(0.3, -0.25, -0.5);
-            camera.add(playerGun);
+            camera.add(gunGroup);
             scene.add(camera);
+        }
+
+        function createDetailedBot(x, z, team) {
+            const botGroup = new THREE.Group();
+            let mainColor = (team === 'ct') ? 0x1e40af : 0xb91c1c;
+            let tagText = (team === 'ct') ? "الفريق الأزرق - CT" : "الفريق الأحمر - T";
+            let tagClass = (team === 'ct') ? "tag-blue" : "tag-red";
+
+            const body = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.35, 1.4, 12), new THREE.MeshStandardMaterial({ color: mainColor }));
+            body.position.y = 1.1;
+            botGroup.add(body);
+
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.32, 12, 12), new THREE.MeshStandardMaterial({ color: 0xfde047 }));
+            head.position.y = 2.0;
+            botGroup.add(head);
+
+            botGroup.position.set(x, 0, z);
+            botGroup.userData = { team: team, tagText: tagText, tagClass: tagClass };
+
+            scene.add(botGroup);
+            bots.push(botGroup);
         }
 
         function animate() {
             requestAnimationFrame(animate);
 
-            // حركة اللاعب بالسلاسة المعتادة
-            const speed = 0.14;
+            const speed = 0.15;
             if (keys['KeyW']) camera.translateZ(-speed);
             if (keys['KeyS']) camera.translateZ(speed);
             if (keys['KeyA']) camera.translateX(-speed);
             if (keys['KeyD']) camera.translateX(speed);
 
-            // تحريك البوتات بشكل واقعي في الساحة
+            checkTargetUnderCrosshair();
+
             bots.forEach(bot => {
-                bot.rotation.y += 0.008;
+                bot.rotation.y += 0.005;
             });
 
             renderer.render(scene, camera);
+        }
+
+        function checkTargetUnderCrosshair() {
+            raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+
+            const tagElem = document.getElementById('target-tag');
+            let found = false;
+
+            if (intersects.length > 0) {
+                let obj = intersects[0].object;
+                while (obj.parent && obj.parent !== scene) {
+                    obj = obj.parent;
+                }
+
+                if (obj.userData && obj.userData.tagText) {
+                    tagElem.innerText = obj.userData.tagText;
+                    tagElem.className = obj.userData.tagClass;
+                    tagElem.style.display = 'block';
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                tagElem.style.display = 'none';
+            }
         }
 
         window.addEventListener('resize', () => {
